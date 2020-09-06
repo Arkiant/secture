@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Secture\Player\Infraestructure;
+namespace App\Secture\Team\Infraestructure;
 
 use App\Entity\Team as DoctrineTeamEntity;
 use App\Secture\Team\Domain\Team;
@@ -9,7 +9,7 @@ use App\Secture\Team\Domain\TeamRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
-class DoctrineTeamRepository implements TeamRepository
+class DoctrineRepository implements TeamRepository
 {
     private EntityManager $em;
 
@@ -64,7 +64,7 @@ class DoctrineTeamRepository implements TeamRepository
 
     public function exists(string $name): bool
     {
-        $teamEntity = $this->em->getRepository(DoctrineTeamEntity::class)->findBy(array("name" => $name));
+        $teamEntity = $this->em->getRepository(DoctrineTeamEntity::class)->findBy(["name" => $name]);
         return !!$teamEntity;
     }
 }

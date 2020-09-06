@@ -22,58 +22,29 @@ class PlayerRepository extends ServiceEntityRepository
     public function findByTeam($team)
     {
         return $this->createQueryBuilder('p')
-        ->andWhere('p.team = :val')
-        ->setParameter('val', $team)
-        ->getQuery()
-        ->getResult();
+            ->andWhere('p.team = :val')
+            ->setParameter('val', $team)
+            ->getQuery()
+            ->getResult();
     }
 
     public function findByPosition($position)
     {
         return $this->createQueryBuilder('p')
-        ->andWhere('p.position = :val')
-        ->setParameter('val', $position)
-        ->getQuery()
-        ->getResult();
-    }
-
-    public function findByTeamAndPosition($team, $position) 
-    {
-        return $this->createQueryBuilder('p')
-        ->andWhere('p.team = :team')
-        ->andWhere('p.position = :position')
-        ->setParameter('team', $team)
-        ->setParameter('position', $position)
-        ->getQuery()
-        ->getResult();
-    }
-
-    // /**
-    //  * @return Player[] Returns an array of Player objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('p.position = :val')
+            ->setParameter('val', '%' . $position . '%')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Player
+    public function findByTeamAndPosition($team, $position)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.team = :team')
+            ->andWhere('p.position = :position')
+            ->setParameter('team', $team)
+            ->setParameter('position', $position)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

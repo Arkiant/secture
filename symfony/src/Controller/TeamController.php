@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Secture\Api\Infraestructure\ApiController;
 use App\Secture\Team\Domain\Team;
 use App\Secture\Team\Domain\TeamID;
 use Exception;
