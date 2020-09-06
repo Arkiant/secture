@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Secture\Api\Infraestructure;
 
 use App\Secture\Application\Team\TeamCreator;
 use App\Secture\Player\Infraestructure\DoctrineTeamRepository;
