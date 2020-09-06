@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Secture\Application\Team;
+namespace App\Secture\Team\Application;
 
 use App\Secture\Team\Domain\Errors\DuplicateException;
 use App\Secture\Team\Domain\Errors\EmptyArgumentException;
@@ -9,17 +9,9 @@ use App\Secture\Team\Domain\Errors\NullException;
 use App\Secture\Team\Domain\Errors\PropertyNotExistsException;
 use App\Secture\Team\Domain\Team;
 use App\Secture\Team\Domain\TeamID;
-use App\Secture\Team\Domain\TeamRepository;
 
-class TeamCreator
+class TeamCreator extends WithTeamRepository
 {
-    private TeamRepository $repository;
-
-    public function __construct(TeamRepository $teamRepository)
-    {
-        $this->repository = $teamRepository;
-    }
-
     public function create(array $data): TeamID
     {
         if (is_null($data)) {
@@ -34,16 +26,16 @@ class TeamCreator
             throw new EmptyArgumentException("name");
         }
 
-        if ($this->repository->exists($data["name"])) {
+        if ($this->getRepository()->exists($data["name"])) {
             throw new DuplicateException($data["name"]);
         }
 
-        return $this->repository->create($data["name"]);
+        return $this->getRepository()->create($data["name"]);
     }
 
     public function read(TeamID $id): Team
     {
-        $data = $this->repository->read($id);
+        $data = $this->getRepository()->read($id);
         if (is_null($data)) {
             throw new NotFoundException($id);
         }
@@ -52,7 +44,7 @@ class TeamCreator
 
     public function update(Team $team): Team
     {
-        $data = $this->repository->update($team);
+        $data = $this->getRepository()->update($team);
         if (is_null($data)) {
             throw new NotFoundException($team->GetID());
         }
@@ -61,7 +53,7 @@ class TeamCreator
 
     public function delete(TeamID $id): TeamID
     {
-        $data = $this->repository->delete($id);
+        $data = $this->getRepository()->delete($id);
         if (is_null($data)) {
             throw new NotFoundException($id);
         }

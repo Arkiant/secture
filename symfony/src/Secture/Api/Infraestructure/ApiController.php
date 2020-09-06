@@ -2,7 +2,7 @@
 
 namespace App\Secture\Api\Infraestructure;
 
-use App\Secture\Application\Team\TeamCreator;
+use App\Secture\Team\Application\TeamCreator;
 use App\Secture\Player\Infraestructure\DoctrineTeamRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
