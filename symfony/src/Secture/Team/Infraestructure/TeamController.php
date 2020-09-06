@@ -57,7 +57,7 @@ class TeamController extends ApiController
         try {
             $data = $this->getData($request);
             $updatedTeam = $this->getTeamCreator()->update(new Team($id, $data["name"]));
-            $this->success($updatedTeam);
+            return $this->success($updatedTeam);
         } catch (Exception $ex) {
             return $this->fail($ex);
         }
@@ -74,7 +74,7 @@ class TeamController extends ApiController
     {
         try {
             $deletedTeam = $this->getTeamCreator()->delete(new TeamID($id));
-            $this->success(sprintf("Deleted team %d", $deletedTeam->getID()));
+            return $this->success(sprintf("Deleted team %d", $deletedTeam->getID()));
         } catch (Exception $ex) {
             return $this->fail($ex);
         }
