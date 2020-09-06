@@ -50,7 +50,7 @@ class DoctrineTeamRepository implements TeamRepository
         return $team;
     }
 
-    public function delete(TeamID $id): TeamID
+    public function delete(TeamID $id): ?TeamID
     {
 
         $teamEntity = $this->em->getRepository(DoctrineTeamEntity::class)->find($id->getID());
