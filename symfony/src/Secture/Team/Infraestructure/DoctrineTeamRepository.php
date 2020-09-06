@@ -28,8 +28,6 @@ class DoctrineTeamRepository implements TeamRepository
         return new TeamID($team->getId());
     }
 
-    //TODO: Not found change to nullable Team
-
     public function read(TeamID $id): ?Team
     {
         $team = $this->em->getRepository(DoctrineTeamEntity::class)->find($id->getID());
