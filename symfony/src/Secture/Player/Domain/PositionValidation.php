@@ -2,6 +2,9 @@
 
 namespace App\Secture\Player\Domain;
 
+/**
+ * Validate position is inside availablePosition array.
+ */
 class PositionValidation
 {
     private static $availablePositions = ["goalkeeper", "defender", "midfielder", "forward"];

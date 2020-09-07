@@ -8,10 +8,19 @@ use App\Secture\Player\Domain\Errors\NotFoundException;
 use App\Secture\Player\Domain\Player;
 use App\Secture\Player\Domain\PlayerValidation;
 use App\Secture\Team\Domain\Team;
-use Exception;
 
+/**
+ * PlayerCreator is a use case class contains logic application
+ */
 class PlayerCreator extends WithPlayerRepository
 {
+    /**
+     * Create a new player.
+     * 
+     * @param array $data ["name" => required, "price" => required, "position" => required, "team" => required]
+     * 
+     * @return Player
+     */
     public function create(array $data): Player
     {
 
@@ -24,6 +33,14 @@ class PlayerCreator extends WithPlayerRepository
         return $this->getRepository()->create($data["name"], $data["price"], $data["position"], $data["team"]);
     }
 
+    /**
+     * Read a single player by id
+     * 
+     * @param int $id
+     * @param string $currency (optional)
+     * 
+     * @return Player
+     */
     public function read(int $id, ?string $currency): Player
     {
         $data = $this->getRepository()->read($id);
@@ -36,6 +53,14 @@ class PlayerCreator extends WithPlayerRepository
         return $converted;
     }
 
+    /**
+     * Update a single player by id
+     * 
+     * @param array $data ["name" => required, "price" => required, "position" => required, "team" => required]
+     * @param int $id
+     * 
+     * @return Player
+     */
     public function update(array $data, int $id): Player
     {
 
@@ -50,6 +75,13 @@ class PlayerCreator extends WithPlayerRepository
         return $updatedPlayer;
     }
 
+    /**
+     * Delete a player
+     * 
+     * @param int $id
+     * 
+     * @return int
+     */
     public function delete(int $id): int
     {
         $data = $this->getRepository()->delete($id);
@@ -59,6 +91,15 @@ class PlayerCreator extends WithPlayerRepository
         return $data;
     }
 
+    /**
+     * Get all players
+     * 
+     * @param string $team (optional) filter by team
+     * @param string $position (optional) filter by position
+     * @param string $currency (optional) return price in current currency example: "usd"
+     * 
+     * @return array Player list
+     */
     public function getAll(?string $team, ?string $position, ?string $currency): array
     {
 

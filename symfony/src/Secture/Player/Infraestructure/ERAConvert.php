@@ -5,6 +5,9 @@ namespace App\Secture\Player\Infraestructure;
 use App\Secture\Player\Domain\ConvertCurrency;
 use App\Secture\Player\Domain\Player;
 
+/**
+ * Exchange Rates Api concrete convert currency
+ */
 class ERAConvert implements ConvertCurrency
 {
     public function convert(Player $player, ?string $currency): Player

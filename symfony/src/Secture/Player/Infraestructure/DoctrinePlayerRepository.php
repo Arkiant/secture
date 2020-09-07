@@ -10,8 +10,10 @@ use App\Secture\Team\Domain\Team;
 use App\Secture\Player\Domain\Player;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
 
+/**
+ * Doctrine player concrete repository
+ */
 class DoctrinePlayerRepository implements PlayerRepository
 {
 

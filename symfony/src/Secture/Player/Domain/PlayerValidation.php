@@ -7,6 +7,13 @@ use App\Secture\Player\Domain\Errors\NullException;
 use App\Secture\Player\Domain\Errors\PositionNotFoundException;
 use App\Secture\Player\Domain\Errors\PropertyNotExistsException;
 
+/**
+ * Validate player properties:
+ * 
+ * - Required values
+ * - No empty values
+ * - Valid positions
+ */
 class PlayerValidation
 {
     public static function validate(array $data)
