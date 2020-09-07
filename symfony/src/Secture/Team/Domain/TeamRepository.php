@@ -12,4 +12,5 @@ interface TeamRepository
     public function update(Team $team): ?Team;
     public function delete(TeamID $id): ?TeamID;
     public function exists(string $name): bool;
+    public function findAll(): ?array;
 }

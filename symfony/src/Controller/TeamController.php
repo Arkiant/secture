@@ -78,4 +78,21 @@ class TeamController extends ApiController
             return $this->fail($ex);
         }
     }
+
+    /**
+     * @Route(
+     *  "/team",
+     *  condition="context.getMethod() in ['GET']"
+     * )
+     */
+    public function getAll(Request $request)
+    {
+
+        try {
+            $players = $this->getTeamCreator()->getAll();
+            return $this->success($players);
+        } catch (Exception $ex) {
+            return $this->fail($ex);
+        }
+    }
 }

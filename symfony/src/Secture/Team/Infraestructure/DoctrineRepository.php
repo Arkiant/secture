@@ -67,4 +67,19 @@ class DoctrineRepository implements TeamRepository
         $teamEntity = $this->em->getRepository(DoctrineTeamEntity::class)->findBy(["name" => $name]);
         return !!$teamEntity;
     }
+
+    public function findAll(): ?array
+    {
+        $teams = $this->em->getRepository(DoctrineTeamEntity::class)->findAll();
+        if (!$teams) {
+            return null;
+        }
+
+        $tList = [];
+        foreach ($teams as $team) {
+            array_push($tList, new Team($team->getId(), $team->getName()));
+        }
+
+        return $tList;
+    }
 }

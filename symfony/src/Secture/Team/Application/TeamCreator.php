@@ -59,4 +59,14 @@ class TeamCreator extends WithTeamRepository
         }
         return $data;
     }
+
+    public function getAll(): array
+    {
+        $data = $this->getRepository()->findAll();
+        if (!$data) {
+            // TODO: throw no result exception
+        }
+
+        return $data;
+    }
 }
