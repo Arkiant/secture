@@ -6,6 +6,122 @@ $ docker exec -it secture_php_1 bash
 $ composer update
 ```
 
+# API docs
+
+## Team
+
+### Get all teams
+
+```
+GET http://localhost:8081/team HTTP/1.1
+
+{
+
+}
+```
+
+### Get single team
+
+```
+GET http://localhost:8081/team/{id} HTTP/1.1
+```
+
+### Create a team
+
+```
+POST http://localhost:8081/team HTTP/1.1
+
+BODY:
+{
+   "name": "Test team"
+}
+```
+
+### Update a team
+
+```
+PUT http://localhost:8081/team/{id} HTTP/1.1
+
+BODY:
+{
+    "name": "New test name"
+}
+```
+
+### Remove a team
+
+```
+DELETE http://localhost:8081/team/{id} HTTP/1.1
+```
+
+## Players
+
+### Get all players
+
+```
+GET http://localhost:8081/player HTTP/1.1
+
+{
+
+}
+```
+
+Additional filters
+
+```
+GET http://localhost:8081/player?position=goalkeeper&team=5&currency=usd HTTP/1.1
+
+{
+
+}
+```
+
+### Get single player
+
+```
+GET http://localhost:8081/player/{id} HTTP/1.1
+```
+
+Additional filters:
+
+```
+GET http://localhost:8081/player/{id}?position=goalkeeper&team=5&currency=usd
+```
+
+### Create a player
+
+```
+POST http://localhost:8081/player HTTP/1.1
+
+BODY:
+{
+   "name": "Test player",
+    "price": 300,
+    "team": 3,
+    "position": "goalkeeper"
+}
+```
+
+### Update a player
+
+```
+PUT http://localhost:8081/player/{id} HTTP/1.1
+
+BODY:
+{
+    "name": "Test player",
+    "price": 300,
+    "team": 3,
+    "position": "goalkeeper"
+}
+```
+
+### Remove a player
+
+```
+DELETE http://localhost:8081/player/{id} HTTP/1.1
+```
+
 # Steps to build php project
 
 ## Build docker
