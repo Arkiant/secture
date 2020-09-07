@@ -32,10 +32,11 @@ class PlayerController extends ApiController
      * condition="context.getMethod() in ['GET']"
      * )
      */
-    public function read(int $id)
+    public function read(Request $request, int $id)
     {
         try {
-            $team = $this->getPlayerCreator()->read($id);
+            $currency = $request->query->get("currency");
+            $team = $this->getPlayerCreator()->read($id, $currency);
             return $this->success($team);
         } catch (Exception $ex) {
             return $this->fail($ex);
@@ -89,7 +90,8 @@ class PlayerController extends ApiController
         try {
             $teamFilter = $request->query->get('team');
             $positionFilter = $request->query->get("position");
-            $players = $this->getPlayerCreator()->getAll($teamFilter, $positionFilter);
+            $currency = $request->query->get("currency");
+            $players = $this->getPlayerCreator($currency)->getAll($teamFilter, $positionFilter, $currency);
 
             return $this->success($players);
         } catch (Exception $ex) {

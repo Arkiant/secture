@@ -38,6 +38,11 @@ class Player implements \JsonSerializable
         return $this->price;
     }
 
+    public function SetPrice(float $price)
+    {
+        $this->price = $price;
+    }
+
     public function GetPosition(): string
     {
         return $this->position;

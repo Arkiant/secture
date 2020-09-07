@@ -2,21 +2,27 @@
 
 namespace App\Secture\Player\Application;
 
+use App\Secture\Player\Domain\ConvertCurrency;
 use App\Secture\Player\Domain\PlayerRepository;
-use App\Secture\Team\Domain\TeamRepository;
 
 abstract class WithPlayerRepository
 {
     private PlayerRepository $repository;
-    private TeamRepository $teamRepository;
+    private ConvertCurrency $cc;
 
-    public function __construct(PlayerRepository $playerRepository)
+    public function __construct(PlayerRepository $playerRepository, ConvertCurrency $converter)
     {
         $this->repository = $playerRepository;
+        $this->cc = $converter;
     }
 
     public function getRepository(): PlayerRepository
     {
         return $this->repository;
+    }
+
+    public function getConverter(): ConvertCurrency
+    {
+        return $this->cc;
     }
 }

@@ -22,17 +22,18 @@ class PlayerCreator extends WithPlayerRepository
         }
 
         return $this->getRepository()->create($data["name"], $data["price"], $data["position"], $data["team"]);
-
-        throw new Exception("not implemented");
     }
 
-    public function read(int $id): Player
+    public function read(int $id, ?string $currency): Player
     {
         $data = $this->getRepository()->read($id);
+
+        $converted = $this->getConverter()->convert($data, $currency);
+
         if (is_null($data)) {
             throw new NotFoundException($id);
         }
-        return $data;
+        return $converted;
     }
 
     public function update(array $data, int $id): Player
@@ -58,7 +59,7 @@ class PlayerCreator extends WithPlayerRepository
         return $data;
     }
 
-    public function getAll(?string $team, ?string $position): array
+    public function getAll(?string $team, ?string $position, ?string $currency): array
     {
 
         $filter = [];
@@ -75,6 +76,12 @@ class PlayerCreator extends WithPlayerRepository
             throw new NoResultsException();
         }
 
-        return $data;
+        $convertedPlayer = [];
+        foreach ($data as $player) {
+            $converted = $this->getConverter()->convert($player, $currency);
+            array_push($convertedPlayer, $converted);
+        }
+
+        return $convertedPlayer;
     }
 }
