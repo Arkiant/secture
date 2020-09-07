@@ -122,6 +122,13 @@ BODY:
 DELETE http://localhost:8081/player/{id} HTTP/1.1
 ```
 
+# Test execution
+
+```
+$ docker exec -it secture_php_1 bash
+$ php bin/phpunit
+```
+
 # Steps to build php project
 
 ## Build docker
