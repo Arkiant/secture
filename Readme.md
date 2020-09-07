@@ -1,16 +1,26 @@
-# Build project
+# Start project
+
+```
+$ docker-compose up -d --build
+$ docker exec -it secture_php_1 bash
+$ composer update
+```
+
+# Steps to build php project
+
+## Build docker
 
 ```
 $ docker-compose up -d --build
 ```
 
-# Restart a container
+## Restart a container
 
 ```
 $ docker-compose up -d php
 ```
 
-# Enter inside a php container to install packages
+## Enter inside a php container to install packages
 
 ```
 $ docker exec -it  secture_php_1 bash
