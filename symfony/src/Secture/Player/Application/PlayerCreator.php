@@ -62,16 +62,19 @@ class PlayerCreator extends WithPlayerRepository
     {
 
         $filter = [];
-        // if ($team) {
-        //     $filter["team"] = $team;
-        // }
-
-        if ($position && is_null($team)) {
-            return $this->getRepository()->getByPosition($position);
+        if ($team) {
+            $filter["team"] = $team;
         }
 
-        if (is_null($team) && is_null($position)) {
-            return $this->getRepository()->findAll();
+        if ($position) {
+            $filter["position"] = $position;
         }
+
+        $data = $this->getRepository()->findAll($filter);
+        if (!$data) {
+            throw new NoResultsException();
+        }
+
+        return $data;
     }
 }

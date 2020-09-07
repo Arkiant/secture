@@ -27,6 +27,7 @@ class Team implements \JsonSerializable
     {
         return
             [
+                'id' => $this->GetID()->getID(),
                 'name' => $this->getName()
             ];
     }

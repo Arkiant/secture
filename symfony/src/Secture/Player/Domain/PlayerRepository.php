@@ -8,7 +8,6 @@ interface PlayerRepository
     public function read(int $id): ?Player;
     public function update(Player $player): ?Player;
     public function delete(int $id): ?int;
-    public function getByPosition(string $position): ?array;
-    public function findAll();
+    public function findAll(array $filter);
     public function exists(string $name): bool;
 }

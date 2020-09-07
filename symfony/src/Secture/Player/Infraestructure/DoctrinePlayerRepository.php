@@ -2,7 +2,7 @@
 
 namespace App\Secture\Player\Infraestructure;
 
-use App\Entity\Player as DoctrinePlayerEntity;
+use App\Entity\Player as EntityPlayer;
 use App\Entity\Team as EntityTeam;
 use App\Repository\PlayerRepository as RepositoryPlayerRepository;
 use App\Secture\Player\Domain\PlayerRepository;
@@ -26,7 +26,7 @@ class DoctrinePlayerRepository implements PlayerRepository
 
     public function create(string $name, float $price, string $position, int $team): Player
     {
-        $player = new DoctrinePlayerEntity();
+        $player = new EntityPlayer();
         $player->setName($name);
         $player->setPrice($price);
         $player->setPosition($position);
@@ -40,7 +40,7 @@ class DoctrinePlayerRepository implements PlayerRepository
 
     public function read(int $id): ?Player
     {
-        $player = $this->em->getRepository(DoctrinePlayerEntity::class)->find($id);
+        $player = $this->em->getRepository(EntityPlayer::class)->find($id);
         if (!$player) {
             return null;
         }
@@ -53,7 +53,7 @@ class DoctrinePlayerRepository implements PlayerRepository
     public function update(Player $player): ?Player
     {
 
-        $playerEntity = $this->em->getRepository(DoctrinePlayerEntity::class)->find($player->getID());
+        $playerEntity = $this->em->getRepository(EntityPlayer::class)->find($player->getID());
         if (!$playerEntity) {
             return null;
         }
@@ -72,7 +72,7 @@ class DoctrinePlayerRepository implements PlayerRepository
 
     public function delete(int $id): ?int
     {
-        $playerEntity = $this->em->getRepository(DoctrinePlayerEntity::class)->find($id);
+        $playerEntity = $this->em->getRepository(EntityPlayer::class)->find($id);
         if (!$playerEntity) {
             return null;
         }
@@ -81,32 +81,27 @@ class DoctrinePlayerRepository implements PlayerRepository
         return $id;
     }
 
-    /**
-     * FIXME: don't receive nothing from database
-     */
-    public function getByPosition(string $position): ?array
+    public function findAll(array $filters): ?array
     {
-
-        $result = $this->playerRepository->findByPosition($position);
-        if (!$result) {
+        $plist = [];
+        $players = $this->em->getRepository(EntityPlayer::class)->findBy($filters);
+        if (!$players) {
             return null;
         }
-
-        return $result;
-    }
-
-    /**
-     * FIXME: don't receive nothing from database
-     */
-    public function findAll()
-    {
-        $result = $this->em->getRepository(DoctrinePlayerEntity::class)->findAll();
-        return $result;
+        foreach ($players as $player) {
+            array_push($plist, ConvertEntityPlayerIntoPlayer($player));
+        }
+        return $plist;
     }
 
     public function exists(string $name): bool
     {
-        $playerEntity = $this->em->getRepository(DoctrinePlayerEntity::class)->findBy(["name" => $name]);
+        $playerEntity = $this->em->getRepository(EntityPlayer::class)->findBy(["name" => $name]);
         return !!$playerEntity;
     }
+}
+
+function ConvertEntityPlayerIntoPlayer(EntityPlayer $entityPlayer): Player
+{
+    return new Player($entityPlayer->getId(), $entityPlayer->getName(), $entityPlayer->getPrice(), new Team($entityPlayer->getTeam()->getId(), $entityPlayer->getTeam()->getName()), $entityPlayer->getPosition());
 }
