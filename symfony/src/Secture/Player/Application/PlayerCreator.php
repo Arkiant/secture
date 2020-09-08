@@ -44,12 +44,11 @@ class PlayerCreator extends WithPlayerRepository
     public function read(int $id, ?string $currency): Player
     {
         $data = $this->getRepository()->read($id);
-
-        $converted = $this->getConverter()->convert($data, $currency);
-
-        if (is_null($data)) {
+        if (!$data) {
             throw new NotFoundException($id);
         }
+
+        $converted = $this->getConverter()->convert($data, $currency);
         return $converted;
     }
 
