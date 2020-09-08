@@ -9,6 +9,9 @@ use App\Secture\Team\Domain\TeamRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * Doctrine team concrete repository used to separate repository logic from database implementation
+ */
 class DoctrineRepository implements TeamRepository
 {
     private EntityManager $em;
@@ -82,4 +85,15 @@ class DoctrineRepository implements TeamRepository
 
         return $tList;
     }
+}
+
+/**
+ * Convert a entity team into a team, this is necessary because are different types and we need to separate domain from database entity
+ * 
+ * @param EntityTeam $entityTeam
+ * @return Team
+ */
+function ConvertEntityTeamIntoTeam(EntityTeam $entityTeam): Team
+{
+    return new Team($entityTeam->getId(), $entityTeam->getName());
 }

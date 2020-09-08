@@ -11,14 +11,16 @@ use App\Secture\Player\Domain\Player;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function App\Secture\Team\Infraestructure\ConvertEntityTeamIntoTeam;
+
 /**
- * Doctrine player concrete repository
+ * Doctrine player concrete repository used to separate repository logic
+ * from database implementation
  */
 class DoctrinePlayerRepository implements PlayerRepository
 {
 
     private EntityManager $em;
-    private RepositoryPlayerRepository $playerRepository;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -103,7 +105,13 @@ class DoctrinePlayerRepository implements PlayerRepository
     }
 }
 
+/**
+ * Convert entity player into a player domain, this is necessary because are different types and we need to separate domain from database entity
+ * 
+ * @param EntityPlayer $entityPlayer
+ * @return Player
+ */
 function ConvertEntityPlayerIntoPlayer(EntityPlayer $entityPlayer): Player
 {
-    return new Player($entityPlayer->getId(), $entityPlayer->getName(), $entityPlayer->getPrice(), new Team($entityPlayer->getTeam()->getId(), $entityPlayer->getTeam()->getName()), $entityPlayer->getPosition());
+    return new Player($entityPlayer->getId(), $entityPlayer->getName(), $entityPlayer->getPrice(), ConvertEntityTeamIntoTeam($entityPlayer->getTeam()), $entityPlayer->getPosition());
 }
