@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 class ValidateRequiredPropertiesTest extends TestCase
 {
 
-    public function testPropertyNotExistsValidateProperties()
+    /** @test */
+    public function it_should_not_exists_properties()
     {
         $validateProperties = ValidateRequiredProperties::validate([]);
         $this->assertFalse($validateProperties["result"]);
         $this->assertNotEmpty($validateProperties["values"]);
     }
 
-    public function testPropertyValidateProperties()
+    /** @test */
+    public function it_should_exists_all_properties()
     {
         $validateProperties = ValidateRequiredProperties::validate(["name" => "", "price" => "", "position" => "", "team" => "team"]);
         $this->assertTrue($validateProperties["result"]);

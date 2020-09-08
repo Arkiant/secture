@@ -10,25 +10,29 @@ use PHPUnit\Framework\TestCase;
 
 class PlayerValidationTest extends TestCase
 {
-    public function testPropertyNotExistsExceptionValidate()
+    /** @test */
+    public function it_should_throw_property_no_exists_exception()
     {
         $this->expectException(PropertyNotExistsException::class);
         PlayerValidation::validate([]);
     }
 
-    public function testEmptyArgumentExceptionValidate()
+    /** @test */
+    public function it_should_throw_empty_argument_exception()
     {
         $this->expectException(EmptyArgumentException::class);
         PlayerValidation::validate(["name" => "", "price" => "", "position" => "", "team" => "team"]);
     }
 
-    public function testPositionNotFoundExceptionValidate()
+    /** @test */
+    public function it_should_throw_position_not_found_exception()
     {
         $this->expectException(PositionNotFoundException::class);
         PlayerValidation::validate(["name" => "Test player", "price" => 100, "position" => "notfoundposition", "team" => 4]);
     }
 
-    public function testSuccessfulValidation()
+    /** @test */
+    public function it_should_be_true()
     {
         PlayerValidation::validate(["name" => "Test player", "price" => 100, "position" => "goalkeeper", "team" => 4]);
         $this->assertTrue(true);

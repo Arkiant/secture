@@ -7,14 +7,16 @@ use PHPUnit\Framework\TestCase;
 
 class PositionValidationTest extends TestCase
 {
-    public function testExistsTrue()
+    /** @test */
+    public function it_should_exists()
     {
         $positionValidation = new PositionValidation();
         $exists = $positionValidation->validate("goalkeeper");
         $this->assertTrue($exists);
     }
 
-    public function testsExistsFalse()
+    /** @test */
+    public function it_should_not_exists()
     {
         $positionValidation = new PositionValidation();
         $exists = $positionValidation->validate("notfoundposition");
