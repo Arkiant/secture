@@ -33,18 +33,4 @@ class PlayerValidationTest extends TestCase
         PlayerValidation::validate(["name" => "Test player", "price" => 100, "position" => "goalkeeper", "team" => 4]);
         $this->assertTrue(true);
     }
-
-    public function testEmptyArgumentEmptyProperties()
-    {
-        $validateEmpty = PlayerValidation::validateEmptyProperties(["name" => "", "price" => "", "position" => "", "team" => "team"]);
-        $this->assertFalse($validateEmpty["result"]);
-        $this->assertNotEmpty($validateEmpty["values"]);
-    }
-
-    public function testEmptyProperties()
-    {
-        $validateEmpty = PlayerValidation::validateEmptyProperties(["name" => "test", "price" => 400, "position" => "goalkeeper", "team" => 5]);
-        $this->assertTrue($validateEmpty["result"]);
-        $this->assertEmpty($validateEmpty["values"]);
-    }
 }

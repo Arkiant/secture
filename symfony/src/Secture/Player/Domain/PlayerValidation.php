@@ -5,6 +5,7 @@ namespace App\Secture\Player\Domain;
 use App\Secture\Player\Domain\Errors\EmptyArgumentException;
 use App\Secture\Player\Domain\Errors\PositionNotFoundException;
 use App\Secture\Player\Domain\Errors\PropertyNotExistsException;
+use App\Secture\Player\Domain\Validation\ValidateEmptyProperties;
 use App\Secture\Player\Domain\Validation\ValidateRequiredProperties;
 
 /**
@@ -17,15 +18,6 @@ use App\Secture\Player\Domain\Validation\ValidateRequiredProperties;
 class PlayerValidation
 {
 
-    public static function validateEmptyProperties(array $data): array
-    {
-        $empty = array_filter($data, function ($v) {
-            return empty($v);
-        });
-
-        return ["result" => !(count($empty) > 0), "values" => array_keys($empty)];
-    }
-
     public static function validate(array $data)
     {
 
@@ -34,7 +26,7 @@ class PlayerValidation
             throw new PropertyNotExistsException(join(", ", $validateProperties["values"]));
         }
 
-        $validateEmpty = self::validateEmptyProperties($data);
+        $validateEmpty = ValidateEmptyProperties::validate($data);
         if (!$validateEmpty["result"]) {
             throw new EmptyArgumentException(join(", ", $validateEmpty["values"]));
         }
