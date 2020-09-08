@@ -85,6 +85,12 @@ class DoctrineRepository implements TeamRepository
 
         return $tList;
     }
+
+    public function existsByID(int $id): bool
+    {
+        $teamEntity = $this->em->getRepository(EntityTeam::class)->find($id);
+        return !$teamEntity;
+    }
 }
 
 /**

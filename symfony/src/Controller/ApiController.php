@@ -19,16 +19,17 @@ class ApiController extends AbstractController
 
     public function getTeamCreator(): TeamCreator
     {
-        $repository = new DoctrineRepository($this->getDoctrine());
-        $this->teamcreator = new TeamCreator($repository);
+        $teamRepository = new DoctrineRepository($this->getDoctrine());
+        $this->teamcreator = new TeamCreator($teamRepository);
         return $this->teamcreator;
     }
 
     public function getPlayerCreator(): PlayerCreator
     {
-        $repository = new DoctrinePlayerRepository($this->getDoctrine());
+        $playerRepository = new DoctrinePlayerRepository($this->getDoctrine());
+        $teamRepository = new DoctrineRepository($this->getDoctrine());
         $converter = new ExchangeRatesApiConvert();
-        $this->playercreator = new PlayerCreator($repository, $converter);
+        $this->playercreator = new PlayerCreator($playerRepository, $teamRepository, $converter);
         return $this->playercreator;
     }
 

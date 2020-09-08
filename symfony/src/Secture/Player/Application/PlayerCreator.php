@@ -7,6 +7,7 @@ use App\Secture\Player\Domain\Errors\NoResultsException;
 use App\Secture\Player\Domain\Errors\NotFoundException;
 use App\Secture\Player\Domain\Player;
 use App\Secture\Player\Domain\Validation\PlayerValidation;
+use App\Secture\Team\Domain\Errors\NotFoundException as ErrorsNotFoundException;
 use App\Secture\Team\Domain\Team;
 
 /**
@@ -26,11 +27,15 @@ class PlayerCreator extends WithPlayerRepository
 
         PlayerValidation::validate($data);
 
-        if ($this->getRepository()->exists($data["name"])) {
+        if ($this->getPlayerRepository()->exists($data["name"])) {
             throw new DuplicateException($data["name"]);
         }
 
-        return $this->getRepository()->create($data["name"], $data["price"], $data["position"], $data["team"]);
+        if ($this->getTeamRepository()->existsByID($data["team"])) {
+            throw new ErrorsNotFoundException($data["team"]);
+        }
+
+        return $this->getPlayerRepository()->create($data["name"], $data["price"], $data["position"], $data["team"]);
     }
 
     /**
@@ -43,7 +48,7 @@ class PlayerCreator extends WithPlayerRepository
      */
     public function read(int $id, ?string $currency): Player
     {
-        $data = $this->getRepository()->read($id);
+        $data = $this->getPlayerRepository()->read($id);
         if (is_null($data)) {
             throw new NotFoundException($id);
         }
@@ -67,7 +72,7 @@ class PlayerCreator extends WithPlayerRepository
 
         $player = new Player($id, $data["name"], $data["price"], new Team($data["team"], ""), $data["position"]);
 
-        $updatedPlayer = $this->getRepository()->update($player);
+        $updatedPlayer = $this->getPlayerRepository()->update($player);
         if (is_null($updatedPlayer)) {
             throw new NotFoundException($data["name"]);
         }
@@ -83,7 +88,7 @@ class PlayerCreator extends WithPlayerRepository
      */
     public function delete(int $id): int
     {
-        $data = $this->getRepository()->delete($id);
+        $data = $this->getPlayerRepository()->delete($id);
         if (is_null($data)) {
             throw new NotFoundException($id);
         }
@@ -111,7 +116,7 @@ class PlayerCreator extends WithPlayerRepository
             $filter["position"] = $position;
         }
 
-        $data = $this->getRepository()->findAll($filter);
+        $data = $this->getPlayerRepository()->findAll($filter);
         if (!$data) {
             throw new NoResultsException();
         }
