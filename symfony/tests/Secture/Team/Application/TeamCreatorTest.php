@@ -16,11 +16,11 @@ class TeamCreatorTest extends TestCase
     {
         parent::setUp();
         $this->repository = $this->repository ?: $this->createMock(TeamRepository::class);
-        $this->repository->method('create')->willReturn(new TeamID(1));
     }
 
     public function testCreate()
     {
+        $this->repository->method('create')->willReturn(new TeamID(1));
         $teamCreator = new TeamCreator($this->repository);
         $this->assertEquals(1, $teamCreator->create(["name" => "Test name"])->getID());
     }
