@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Secture\Player\Application\PlayerCreator;
 use App\Secture\Player\Infraestructure\DoctrinePlayerRepository;
-use App\Secture\Player\Infraestructure\ERAConvert;
+use App\Secture\Player\Infraestructure\ExchangeRatesApiConvert;
 use App\Secture\Team\Application\TeamCreator;
 use App\Secture\Team\Infraestructure\DoctrineRepository;
 use Exception;
@@ -27,7 +27,7 @@ class ApiController extends AbstractController
     public function getPlayerCreator(): PlayerCreator
     {
         $repository = new DoctrinePlayerRepository($this->getDoctrine());
-        $converter = new ERAConvert();
+        $converter = new ExchangeRatesApiConvert();
         $this->playercreator = new PlayerCreator($repository, $converter);
         return $this->playercreator;
     }

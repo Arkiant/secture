@@ -8,7 +8,7 @@ use App\Secture\Player\Domain\Player;
 /**
  * Exchange Rates Api concrete convert currency
  */
-class ERAConvert implements ConvertCurrency
+class ExchangeRatesApiConvert implements ConvertCurrency
 {
     public function convert(Player $player, ?string $currency): Player
     {
