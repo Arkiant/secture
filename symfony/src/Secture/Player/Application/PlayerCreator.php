@@ -21,7 +21,7 @@ class PlayerCreator extends WithPlayerRepository
      * 
      * @return Player
      */
-    public function create(array $data): Player
+    public function create(array $data): int
     {
 
         PlayerValidation::validate($data);

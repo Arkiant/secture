@@ -19,8 +19,8 @@ class PlayerController extends ApiController
     {
         try {
             $data = $this->getData($request);
-            $teamID = $this->getPlayerCreator()->create($data);
-            return $this->success(sprintf("Successful created player with id: %s", $teamID->getID()), Response::HTTP_CREATED);
+            $playerID = $this->getPlayerCreator()->create($data);
+            return $this->success(sprintf("Successful created player with id: %s", $playerID), Response::HTTP_CREATED);
         } catch (Exception $ex) {
             return $this->fail($ex);
         }
