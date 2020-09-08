@@ -18,7 +18,8 @@ class TeamCreatorTest extends TestCase
         $this->repository = $this->repository ?: $this->createMock(TeamRepository::class);
     }
 
-    public function testCreate()
+    /** @test */
+    public function it_should_create_a_new_team(): void
     {
         $this->repository->method('create')->willReturn(new TeamID(1));
         $teamCreator = new TeamCreator($this->repository);

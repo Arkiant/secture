@@ -25,7 +25,8 @@ class PlayerCreatorTest extends TestCase
         $this->convertCurrency->method('convert')->willReturnSelf();
     }
 
-    public function testCreate()
+    /** @test */
+    public function it_should_create_a_new_player(): void
     {
         $playerCreator = new PlayerCreator($this->repository, $this->convertCurrency);
         $this->assertEquals(1, $playerCreator->create(["name" => "Test player", "price" => 100, "position" => "goalkeeper", "team" => 4]));
