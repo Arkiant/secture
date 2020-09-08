@@ -16,25 +16,35 @@ use App\Secture\Player\Domain\Errors\PropertyNotExistsException;
  */
 class PlayerValidation
 {
-    public static function validate(array $data)
+
+    private static $requiredValues = ["name", "price", "team", "position"];
+
+    public static function validateProperties(array $data): array
     {
+        $values = array_diff(self::$requiredValues, array_keys($data));
+        return ["result" => !(count($values) > 0), "values" => $values];
+    }
 
-        $requiredValues = ["name", "price", "position", "team"];
-
-        if (is_null($data)) {
-            throw new NullException();
-        }
-
-        $values = array_diff($requiredValues, array_keys($data));
-        if (count($values) > 0) {
-            throw new PropertyNotExistsException(join(", ", $values));
-        }
-
+    public static function validateEmptyProperties(array $data): array
+    {
         $empty = array_filter($data, function ($v) {
             return empty($v);
         });
-        if (count($empty) > 0) {
-            throw new EmptyArgumentException(join(", ", array_keys($empty)));
+
+        return ["result" => !(count($empty) > 0), "values" => array_keys($empty)];
+    }
+
+    public static function validate(array $data)
+    {
+
+        $validateProperties = self::validateProperties($data);
+        if (!$validateProperties["result"]) {
+            throw new PropertyNotExistsException(join(", ", $validateProperties["values"]));
+        }
+
+        $validateEmpty = self::validateEmptyProperties($data);
+        if (!$validateEmpty["result"]) {
+            throw new EmptyArgumentException(join(", ", $validateEmpty["values"]));
         }
 
         $positionValidation = new PositionValidation();

@@ -13,28 +13,52 @@ class PlayerValidationTest extends TestCase
     public function testPropertyNotExistsExceptionValidate()
     {
         $this->expectException(PropertyNotExistsException::class);
-        $validator = new PlayerValidation();
-        $validator->validate([]);
+        PlayerValidation::validate([]);
     }
 
     public function testEmptyArgumentExceptionValidate()
     {
         $this->expectException(EmptyArgumentException::class);
-        $validator = new PlayerValidation();
-        $validator->validate(["name" => "", "price" => "", "position" => "", "team" => "team"]);
+        PlayerValidation::validate(["name" => "", "price" => "", "position" => "", "team" => "team"]);
     }
 
     public function testPositionNotFoundExceptionValidate()
     {
         $this->expectException(PositionNotFoundException::class);
-        $validator = new PlayerValidation();
-        $validator->validate(["name" => "Test player", "price" => 100, "position" => "notfoundposition", "team" => 4]);
+        PlayerValidation::validate(["name" => "Test player", "price" => 100, "position" => "notfoundposition", "team" => 4]);
     }
 
     public function testSuccessfulValidation()
     {
-        $validator = new PlayerValidation();
-        $validator->validate(["name" => "Test player", "price" => 100, "position" => "goalkeeper", "team" => 4]);
+        PlayerValidation::validate(["name" => "Test player", "price" => 100, "position" => "goalkeeper", "team" => 4]);
         $this->assertTrue(true);
+    }
+
+    public function testPropertyNotExistsValidateProperties()
+    {
+        $validateProperties = PlayerValidation::validateProperties([]);
+        $this->assertFalse($validateProperties["result"]);
+        $this->assertNotEmpty($validateProperties["values"]);
+    }
+
+    public function testPropertyValidateProperties()
+    {
+        $validateProperties = PlayerValidation::validateProperties(["name" => "", "price" => "", "position" => "", "team" => "team"]);
+        $this->assertTrue($validateProperties["result"]);
+        $this->assertEmpty($validateProperties["values"]);
+    }
+
+    public function testEmptyArgumentEmptyProperties()
+    {
+        $validateEmpty = PlayerValidation::validateEmptyProperties(["name" => "", "price" => "", "position" => "", "team" => "team"]);
+        $this->assertFalse($validateEmpty["result"]);
+        $this->assertNotEmpty($validateEmpty["values"]);
+    }
+
+    public function testEmptyProperties()
+    {
+        $validateEmpty = PlayerValidation::validateEmptyProperties(["name" => "test", "price" => 400, "position" => "goalkeeper", "team" => 5]);
+        $this->assertTrue($validateEmpty["result"]);
+        $this->assertEmpty($validateEmpty["values"]);
     }
 }

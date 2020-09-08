@@ -23,6 +23,18 @@ class Player implements \JsonSerializable
         $this->position = $position;
     }
 
+    public function convertPlayerFromArray(array $data): Player
+    {
+
+        PlayerValidation::validate($data);
+
+        $this->name = $data["name"];
+        $this->price = $data["price"];
+        $this->position = $data["position"];
+
+        return $this;
+    }
+
     public function GetID(): int
     {
         return $this->id;
