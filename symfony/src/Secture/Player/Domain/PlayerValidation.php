@@ -3,9 +3,9 @@
 namespace App\Secture\Player\Domain;
 
 use App\Secture\Player\Domain\Errors\EmptyArgumentException;
-use App\Secture\Player\Domain\Errors\NullException;
 use App\Secture\Player\Domain\Errors\PositionNotFoundException;
 use App\Secture\Player\Domain\Errors\PropertyNotExistsException;
+use App\Secture\Player\Domain\Validation\ValidateRequiredProperties;
 
 /**
  * Validate player properties:
@@ -16,14 +16,6 @@ use App\Secture\Player\Domain\Errors\PropertyNotExistsException;
  */
 class PlayerValidation
 {
-
-    private static $requiredValues = ["name", "price", "team", "position"];
-
-    public static function validateProperties(array $data): array
-    {
-        $values = array_diff(self::$requiredValues, array_keys($data));
-        return ["result" => !(count($values) > 0), "values" => $values];
-    }
 
     public static function validateEmptyProperties(array $data): array
     {
@@ -37,7 +29,7 @@ class PlayerValidation
     public static function validate(array $data)
     {
 
-        $validateProperties = self::validateProperties($data);
+        $validateProperties = ValidateRequiredProperties::validate($data);
         if (!$validateProperties["result"]) {
             throw new PropertyNotExistsException(join(", ", $validateProperties["values"]));
         }
