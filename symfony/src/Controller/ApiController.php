@@ -32,9 +32,9 @@ class ApiController extends AbstractController
         return $this->playercreator;
     }
 
-    public function success($response)
+    public function success($response, $code = 200)
     {
-        return $this->json(["message" => $response]);
+        return $this->json(["message" => $response], $code);
     }
 
     public function fail(Exception $error)

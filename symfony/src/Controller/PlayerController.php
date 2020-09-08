@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PlayerController extends ApiController
@@ -19,7 +20,7 @@ class PlayerController extends ApiController
         try {
             $data = $this->getData($request);
             $teamID = $this->getPlayerCreator()->create($data);
-            return $this->success(sprintf("Successful created player with id: %s", $teamID->getID()));
+            return $this->success(sprintf("Successful created player with id: %s", $teamID->getID()), Response::HTTP_CREATED);
         } catch (Exception $ex) {
             return $this->fail($ex);
         }
