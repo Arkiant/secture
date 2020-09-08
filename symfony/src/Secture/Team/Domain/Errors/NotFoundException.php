@@ -2,12 +2,10 @@
 
 namespace App\Secture\Team\Domain\Errors;
 
-use App\Secture\Team\Domain\TeamID;
-
 class NotFoundException extends \RuntimeException implements \Throwable
 {
-    public function __construct(TeamID $teamID)
+    public function __construct(int $teamID)
     {
-        parent::__construct(sprintf("Team not found %s", $teamID->getID()), 404);
+        parent::__construct(sprintf("Team not found %s", $teamID), 404);
     }
 }

@@ -38,7 +38,7 @@ class TeamCreator extends WithTeamRepository
     {
         $data = $this->getRepository()->read($id);
         if (is_null($data)) {
-            throw new NotFoundException($id);
+            throw new NotFoundException($id->getID());
         }
         return $data;
     }
@@ -47,7 +47,7 @@ class TeamCreator extends WithTeamRepository
     {
         $data = $this->getRepository()->update($team);
         if (is_null($data)) {
-            throw new NotFoundException($team->GetID());
+            throw new NotFoundException($team->GetID()->getID());
         }
         return $data;
     }
@@ -56,7 +56,7 @@ class TeamCreator extends WithTeamRepository
     {
         $data = $this->getRepository()->delete($id);
         if (is_null($data)) {
-            throw new NotFoundException($id);
+            throw new NotFoundException($id->getID());
         }
         return $data;
     }
