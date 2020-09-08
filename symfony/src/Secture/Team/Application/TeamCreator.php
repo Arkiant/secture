@@ -4,6 +4,7 @@ namespace App\Secture\Team\Application;
 
 use App\Secture\Team\Domain\Errors\DuplicateException;
 use App\Secture\Team\Domain\Errors\EmptyArgumentException;
+use App\Secture\Team\Domain\Errors\NoResultsException;
 use App\Secture\Team\Domain\Errors\NotFoundException;
 use App\Secture\Team\Domain\Errors\NullException;
 use App\Secture\Team\Domain\Errors\PropertyNotExistsException;
@@ -64,7 +65,7 @@ class TeamCreator extends WithTeamRepository
     {
         $data = $this->getRepository()->findAll();
         if (!$data) {
-            // TODO: throw no result exception
+            throw new NoResultsException();
         }
 
         return $data;
