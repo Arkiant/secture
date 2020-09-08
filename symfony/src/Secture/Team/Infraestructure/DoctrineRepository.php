@@ -2,7 +2,7 @@
 
 namespace App\Secture\Team\Infraestructure;
 
-use App\Entity\Team as DoctrineTeamEntity;
+use App\Entity\Team as EntityTeam;
 use App\Secture\Team\Domain\Team;
 use App\Secture\Team\Domain\TeamID;
 use App\Secture\Team\Domain\TeamRepository;
@@ -20,7 +20,7 @@ class DoctrineRepository implements TeamRepository
 
     public function create(string $name): TeamID
     {
-        $team = new DoctrineTeamEntity();
+        $team = new EntityTeam();
         $team->setName($name);
         $this->em->persist($team);
         $this->em->flush();
@@ -30,7 +30,7 @@ class DoctrineRepository implements TeamRepository
 
     public function read(TeamID $id): ?Team
     {
-        $team = $this->em->getRepository(DoctrineTeamEntity::class)->find($id->getID());
+        $team = $this->em->getRepository(EntityTeam::class)->find($id->getID());
         if (!$team) {
             return null;
         }
@@ -40,7 +40,7 @@ class DoctrineRepository implements TeamRepository
 
     public function update(Team $team): ?Team
     {
-        $teamEntity = $this->em->getRepository(DoctrineTeamEntity::class)->find($team->getID()->getID());
+        $teamEntity = $this->em->getRepository(EntityTeam::class)->find($team->getID()->getID());
         if (!$teamEntity) {
             return null;
         }
@@ -53,7 +53,7 @@ class DoctrineRepository implements TeamRepository
     public function delete(TeamID $id): ?TeamID
     {
 
-        $teamEntity = $this->em->getRepository(DoctrineTeamEntity::class)->find($id->getID());
+        $teamEntity = $this->em->getRepository(EntityTeam::class)->find($id->getID());
         if (!$teamEntity) {
             return null;
         }
@@ -64,13 +64,13 @@ class DoctrineRepository implements TeamRepository
 
     public function exists(string $name): bool
     {
-        $teamEntity = $this->em->getRepository(DoctrineTeamEntity::class)->findBy(["name" => $name]);
+        $teamEntity = $this->em->getRepository(EntityTeam::class)->findBy(["name" => $name]);
         return !!$teamEntity;
     }
 
     public function findAll(): ?array
     {
-        $teams = $this->em->getRepository(DoctrineTeamEntity::class)->findAll();
+        $teams = $this->em->getRepository(EntityTeam::class)->findAll();
         if (!$teams) {
             return null;
         }
