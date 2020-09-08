@@ -22,7 +22,7 @@ class TeamController extends ApiController
         try {
             $data = $this->getData($request);
             $teamID = $this->getTeamCreator()->create($data);
-            return $this->success(sprintf("Successful created team with id: %s", $teamID->getID()), Response::HTTP_CREATED);
+            return $this->success(sprintf("Successful created team with id: %s", $teamID), Response::HTTP_CREATED);
         } catch (Exception $ex) {
             return $this->fail($ex);
         }
@@ -73,8 +73,8 @@ class TeamController extends ApiController
     public function delete(int $id)
     {
         try {
-            $deletedTeam = $this->getTeamCreator()->delete(new TeamID($id));
-            return $this->success(sprintf("Deleted team %d", $deletedTeam->getID()));
+            $teamID = $this->getTeamCreator()->delete(new TeamID($id));
+            return $this->success(sprintf("Deleted team %d", $teamID));
         } catch (Exception $ex) {
             return $this->fail($ex);
         }

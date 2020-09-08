@@ -21,8 +21,16 @@ class TeamCreatorTest extends TestCase
     /** @test */
     public function it_should_create_a_new_team(): void
     {
-        $this->repository->method('create')->willReturn(new TeamID(1));
+        $this->repository->method('create')->willReturn(1);
         $teamCreator = new TeamCreator($this->repository);
-        $this->assertEquals(1, $teamCreator->create(["name" => "Test name"])->getID());
+        $this->assertEquals(1, $teamCreator->create(["name" => "Test name"]));
+    }
+
+    /** @test */
+    public function it_should_delete_a_existing_team(): void
+    {
+        $this->repository->method('delete')->willReturn(1);
+        $teamCreator = new TeamCreator($this->repository);
+        $this->assertEquals(1, $teamCreator->delete(new TeamID(1)));
     }
 }

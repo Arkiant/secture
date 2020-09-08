@@ -28,7 +28,7 @@ class DoctrinePlayerRepository implements PlayerRepository
         $this->playerRepository = new RepositoryPlayerRepository($registry);
     }
 
-    public function create(string $name, float $price, string $position, int $team): Player
+    public function create(string $name, float $price, string $position, int $team): int
     {
         $player = new EntityPlayer();
         $player->setName($name);
@@ -39,7 +39,7 @@ class DoctrinePlayerRepository implements PlayerRepository
         $player->setTeam($team);
         $this->em->persist($player);
         $this->em->flush();
-        return new Player($player->getId(), $player->getName(), $player->getPrice(), new Team($team->getId(), $team->getName()), $player->getPosition());
+        return $player->getId();
     }
 
     public function read(int $id): ?Player

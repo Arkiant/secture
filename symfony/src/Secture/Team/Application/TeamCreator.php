@@ -12,7 +12,7 @@ use App\Secture\Team\Domain\TeamID;
 
 class TeamCreator extends WithTeamRepository
 {
-    public function create(array $data): TeamID
+    public function create(array $data): int
     {
         if (is_null($data)) {
             throw new NullException();
@@ -51,7 +51,7 @@ class TeamCreator extends WithTeamRepository
         return $data;
     }
 
-    public function delete(TeamID $id): TeamID
+    public function delete(TeamID $id): int
     {
         $data = $this->getRepository()->delete($id);
         if (is_null($data)) {

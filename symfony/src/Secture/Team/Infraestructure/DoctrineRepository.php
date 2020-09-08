@@ -21,14 +21,14 @@ class DoctrineRepository implements TeamRepository
         $this->em = $registry->getManager();
     }
 
-    public function create(string $name): TeamID
+    public function create(string $name): int
     {
         $team = new EntityTeam();
         $team->setName($name);
         $this->em->persist($team);
         $this->em->flush();
 
-        return new TeamID($team->getId());
+        return $team->getId();
     }
 
     public function read(TeamID $id): ?Team
@@ -53,7 +53,7 @@ class DoctrineRepository implements TeamRepository
         return $team;
     }
 
-    public function delete(TeamID $id): ?TeamID
+    public function delete(TeamID $id): ?int
     {
 
         $teamEntity = $this->em->getRepository(EntityTeam::class)->find($id->getID());
@@ -62,7 +62,7 @@ class DoctrineRepository implements TeamRepository
         }
         $this->em->remove($teamEntity);
         $this->em->flush();
-        return $id;
+        return $id->getID();
     }
 
     public function exists(string $name): bool
