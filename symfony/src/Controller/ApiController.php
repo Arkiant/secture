@@ -39,7 +39,8 @@ class ApiController extends AbstractController
 
     public function fail(Exception $error)
     {
-        return $this->json(["error" => sprintf("An error ocurried: %s", $error->getMessage())], $error->getCode() | 500);
+        $code = $error->getCode() ?: 500;
+        return $this->json(["error" => sprintf("An error ocurried: %s", $error->getMessage())], $code);
     }
 
     public function getData(Request $request)
