@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Secture\Player\Domain;
+namespace App\Secture\Player\Domain\Validation;
 
 use App\Secture\Player\Domain\Errors\EmptyArgumentException;
 use App\Secture\Player\Domain\Errors\PositionNotFoundException;
@@ -32,7 +32,7 @@ class PlayerValidation
         }
 
         $positionValidation = new PositionValidation();
-        if (!$positionValidation->exists($data["position"])) {
+        if (!$positionValidation->validate($data["position"])) {
             throw new PositionNotFoundException($data["position"]);
         }
     }

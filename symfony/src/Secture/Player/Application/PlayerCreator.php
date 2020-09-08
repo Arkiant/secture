@@ -6,7 +6,7 @@ use App\Secture\Player\Domain\Errors\DuplicateException;
 use App\Secture\Player\Domain\Errors\NoResultsException;
 use App\Secture\Player\Domain\Errors\NotFoundException;
 use App\Secture\Player\Domain\Player;
-use App\Secture\Player\Domain\PlayerValidation;
+use App\Secture\Player\Domain\Validation\PlayerValidation;
 use App\Secture\Team\Domain\Team;
 
 /**

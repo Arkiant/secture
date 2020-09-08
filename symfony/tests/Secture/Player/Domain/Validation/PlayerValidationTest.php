@@ -5,7 +5,7 @@ namespace App\Tests\Secture\Player\Domain;
 use App\Secture\Player\Domain\Errors\EmptyArgumentException;
 use App\Secture\Player\Domain\Errors\PositionNotFoundException;
 use App\Secture\Player\Domain\Errors\PropertyNotExistsException;
-use App\Secture\Player\Domain\PlayerValidation;
+use App\Secture\Player\Domain\Validation\PlayerValidation;
 use PHPUnit\Framework\TestCase;
 
 class PlayerValidationTest extends TestCase
